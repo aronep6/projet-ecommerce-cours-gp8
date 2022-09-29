@@ -1,6 +1,7 @@
 import './Featured.css';
 
 export default function index() {
+  
   return (
     <section className="featured section" id="featured">
       <h2 className="section-title">FEATURED</h2>
