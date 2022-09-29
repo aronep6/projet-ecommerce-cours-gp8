@@ -37,7 +37,8 @@
   width: 220px;
   margin-top: var(--mb-3);
   margin-bottom: var(--mb-6);
-  transform: var(--rotate-img);
+  /* transform: var(--rotate-img); */
+  border-radius: 6px;
   filter: drop-shadow(0 12px 8px rgba(0, 0, 0, 0.2));
 }
 
