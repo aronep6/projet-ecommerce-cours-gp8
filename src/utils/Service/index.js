@@ -37,6 +37,12 @@ class Service extends Core {
         return api_response;
     }
 
+    async getCollectionsFromVendor(vendor) {
+        const api_response = await this.useCloudURL();
+        
+        console.log(api_response);
+    };
+
 };
 
 export default Service;

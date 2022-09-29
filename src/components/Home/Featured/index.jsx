@@ -22,13 +22,8 @@ export default function Featured() {
     fetchFeatured();
   }, [products]);
 
-  useEffect(() => {
-    console.log("Featured products fetched, and sorted");
-    console.log(products.datas);
-  }, [products.datas]);
-
   return products.isFetched && products.datas && <section className="featured section" id="featured">
-      <h2 className="section-title">FEATURED</h2>
+      <h2 className="section-title">Tendances</h2>
 
       <div className="featured__container grid">
         { 
@@ -38,7 +33,7 @@ export default function Featured() {
               <span className="sneaker__name">{product?.firme} { product?.name }</span>
               <span className="sneaker__preci">{ product?.price } €</span>
               <a href="#" className="button-light">
-                Add to Cart <i className="bx bx-right-arrow-alt button-icon"></i>
+                Ajouter au panier <i className="bx bx-right-arrow-alt button-icon"></i>
               </a>
             </article>
           )

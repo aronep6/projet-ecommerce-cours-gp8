@@ -1,6 +1,27 @@
 import './Collection.css';
+import { useService } from '../../../utils/hooks';
+import { useEffect, useState } from 'react';
 
-export default function index() {
+export default function Collection() {
+  
+  const [collections, setCollections] = useState({ isFetched: false, datas: undefined });
+
+  const service = useService();
+
+  useEffect(() => {
+    if (collections.isFetched || !!collections.datas) return;
+
+    console.log("Fetching collection products...");
+
+    const fetchFeatured = async () => {
+      const featured = await service.getCollectionsProducts();
+      const randomFeatured = featured.data.sort(() => 0.5 - Math.random()).slice(0, 3);
+      setCollections({ isFetched: true, datas: randomFeatured });
+    };
+
+    fetchFeatured();
+  }, [collections]);
+
   return (
     <section className="collection section">
       <div className="collection__container grid">
