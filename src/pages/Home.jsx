@@ -11,10 +11,20 @@ import {
 import CookieConsent from 'react-cookie-consent';
 
 const CookieConsentContainer = () => {
-  return <CookieConsent style={{ backgroundColor: "rgb(30 41 59)"  }}>
-      Ce site utilise des cookies.{` `}
+  return <CookieConsent 
+    buttonText="J'ai compris"
+    cookieName="allowCookiesOnSite"
+    buttonStyle={{
+      backgroundColor: '#fff',
+      color: "black",
+      fontWeight: "bold",
+    }}
+    style={{ backgroundColor: "rgb(30 41 59)"  }}>
+      <p style={{ lineHeight: "1" }}>
+      Ce site utilise des cookies.{` `}<br />
       <span style={{ fontSize: "10px" }}>Nous les utilisons pour vous offrir une expérience utilisateur de qualité. 
       En continuant votre navigation, vous acceptez l'utilisation de ces cookies.</span>
+      </p>
   </CookieConsent>
 };
 
