@@ -41,6 +41,7 @@ export default function NewCollection() {
         </div>
 
         <div className="new__sneaker">
+          
 
           {
             menCol.datas.map((product) => <div key={product._id} className="new__sneaker-card">
