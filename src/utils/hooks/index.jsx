@@ -1,9 +1,15 @@
 import { useContext } from "react";
 import ServiceContext from "../Service/context";
+import LocalbaseContext from "../Localbase/context";
 
 const useService = () => {
-    const service = useContext(ServiceContext);
-    return service;
+    const _s = useContext(ServiceContext);
+    return _s;
 };
 
-export { useService };
+const useLocalbase = () => {
+    const _l = useContext(LocalbaseContext);
+    return _l;
+};
+
+export { useService, useLocalbase };

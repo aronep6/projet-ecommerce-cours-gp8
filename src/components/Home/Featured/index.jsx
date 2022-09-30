@@ -1,14 +1,16 @@
 import './Featured.css';
-import { useService } from '../../../utils/hooks';
+import { useLocalbase, useService } from '../../../utils/hooks';
 import { useEffect, useState } from 'react';
 
 export default function Featured() {
+  const { datasIsAvailable } = useLocalbase();
 
   const [products, setProducts] = useState({ isFetched: false, datas: undefined });
 
   const service = useService();
 
   useEffect(() => {
+    if (!datasIsAvailable) return;
     if (products.isFetched || !!products.datas) return;
 
     console.log("Fetching featured products...");
@@ -20,7 +22,7 @@ export default function Featured() {
     };
 
     fetchFeatured();
-  }, [products]);
+  }, [datasIsAvailable]);
 
   return products.isFetched && products.datas && <section className="featured section" id="featured">
       <h2 className="section-title">Tendances</h2>

@@ -1,26 +1,32 @@
 import './Collection.css';
-import { useService } from '../../../utils/hooks';
+import { useLocalbase, useService } from '../../../utils/hooks';
 import { useEffect, useState } from 'react';
 
+const famous_vendors = ["Nike", "Adidas"];
+
 export default function Collection() {
-  
+  const { datasIsAvailable } = useLocalbase();
+
   const [collections, setCollections] = useState({ isFetched: false, datas: undefined });
 
   const service = useService();
 
   useEffect(() => {
+    if (!datasIsAvailable) return;
     if (collections.isFetched || !!collections.datas) return;
 
     console.log("Fetching collection products...");
 
-    const fetchFeatured = async () => {
-      const featured = await service.getCollectionsProducts();
-      const randomFeatured = featured.data.sort(() => 0.5 - Math.random()).slice(0, 3);
-      setCollections({ isFetched: true, datas: randomFeatured });
+    const fetchCollections = async () => {
+      famous_vendors.forEach(async (vendor) => {
+        const collection_of_vendor = await service.getCollectionsFromVendor(vendor, true);
+        console.log("Collection of the vendor", collection_of_vendor);
+        setCollections({ isFetched: false, datas: { ...collections.datas, [vendor.toLocaleLowerCase()]: collection_of_vendor.data } });
+      });
     };
 
-    fetchFeatured();
-  }, [collections]);
+    fetchCollections();
+  }, [datasIsAvailable]);
 
   return (
     <section className="collection section">
