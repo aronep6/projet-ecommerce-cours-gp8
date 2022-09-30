@@ -57,7 +57,7 @@ class Service extends Core {
         };
 
         console.log(`Products from ${vendor} : `, collections);
-        return collections;  
+        return collections;
     };
 
     async getWomenCollections() {
@@ -69,6 +69,14 @@ class Service extends Core {
         return collections;
     };
 
+    async getMenCollections(_limit = 4) {
+        const response = await this.db.collection("products").get();
+        const collections = response.filter((product) => product.genre.toLowerCase() === "men");
+
+        // Savng to "Men" specific collection
+        await this.db.collection("men").set(collections);
+        return collections.splice(0, _limit);
+    };
 };
 
 export default Service;

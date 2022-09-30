@@ -1,8 +1,32 @@
 import './NewCollection.css';
 
-export default function index() {
-  return (
-    <section className="new section" id="new">
+import { useLocalbase, useService } from '../../../utils/hooks';
+import { useEffect, useState } from 'react';
+
+export default function NewCollection() {
+  
+  const { datasIsAvailable } = useLocalbase();
+
+  const [menCol, setMenCol] = useState({ isFetched: false, datas: undefined });
+
+  const service = useService();
+
+  useEffect(() => {
+    if (!datasIsAvailable) return;
+    if (menCol.isFetched || !!menCol.datas) return;
+
+    console.log("Fetching women collection products...");
+
+    const fetchMenCollections = async () => {
+      const men_products = await service.getMenCollections();
+      console.log(men_products);
+      setMenCol({ isFetched: true, datas: men_products });
+    };
+
+    fetchMenCollections();
+  }, [datasIsAvailable]);
+
+  return menCol.isFetched && <section className="new section" id="new">
       <h2 className="section-title">NEW COLLECTION</h2>
 
       <div className="new__container grid">
@@ -17,43 +41,20 @@ export default function index() {
         </div>
 
         <div className="new__sneaker">
-          <div className="new__sneaker-card">
-            <img src="/img/new2.png" alt="" className="new__sneaker-img" />
-            <div className="new__sneaker-overlay">
-              <a href="#" className="button">
-                Add to Cart
-              </a>
-            </div>
-          </div>
 
-          <div className="new__sneaker-card">
-            <img src="/img/new3.png" alt="" className="new__sneaker-img" />
-            <div className="new__sneaker-overlay">
-              <a href="#" className="button">
-                Add to Cart
-              </a>
+          {
+            menCol.datas.map((product) => <div key={product._id} className="new__sneaker-card">
+              <img src={product.picture_1} alt="" className="new__sneaker-img" />
+              <div className="new__sneaker-overlay">
+                <a href="#" className="button">
+                  Ajouter au panier
+                </a>
+              </div>
             </div>
-          </div>
+            )
+          }
 
-          <div className="new__sneaker-card">
-            <img src="/img/new4.png" alt="" className="new__sneaker-img" />
-            <div className="new__sneaker-overlay">
-              <a href="#" className="button">
-                Add to Cart
-              </a>
-            </div>
-          </div>
-
-          <div className="new__sneaker-card">
-            <img src="/img/new5.png" alt="" className="new__sneaker-img" />
-            <div className="new__sneaker-overlay">
-              <a href="#" className="button">
-                Add to Cart
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </section>
-  );
 }
